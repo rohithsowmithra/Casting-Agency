@@ -4,7 +4,7 @@ from sqlalchemy import Column, String, Integer, DateTime, Table, ForeignKey
 
 db = SQLAlchemy()
 
-db_path = os.environ.get('DATABASE_URI', 'postgresql+psycopg2://postgres:postgres@localhost:5432/cast_agency')
+db_path = os.environ.get('DATABASE_URL')
 
 def setup_db(app, db_path = db_path):
     app.config['SQLALCHEMY_DATABASE_URI'] = db_path
