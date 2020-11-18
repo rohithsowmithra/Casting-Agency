@@ -17,7 +17,7 @@ def create_app(test_config=None):
 
 app = create_app()
 
-@APP.after_request
+@app.after_request
 def after_request(response):
 
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
