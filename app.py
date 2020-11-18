@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Movie, Actor, db
@@ -24,6 +24,10 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
 
   return response
+
+@aAPP.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     APP.run(host='0.0.0.0', port=8080, debug=True)
