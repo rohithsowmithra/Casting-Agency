@@ -15,7 +15,7 @@ def create_app(test_config=None):
 
   return app
 
-APP = create_app()
+app = create_app()
 
 @APP.after_request
 def after_request(response):
@@ -25,9 +25,9 @@ def after_request(response):
 
   return response
 
-@APP.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    APP.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
