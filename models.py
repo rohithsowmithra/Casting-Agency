@@ -13,12 +13,18 @@ def setup_db(app, db_path = db_path):
     db.init_app(app)
     #db.create_all()
 
+movies_actors = Table('movies_actors', db.Model.metadata,
+                      Column('movie_id', Integer, ForeignKey('movie.id'), primary_key = True),
+                      Column('actor_id', Integer, ForeignKey('actor.id'), primary_key = True)
+                      )
+
 class Movie(db.Model):
     __tablename__ = 'movie'
 
     id = Column(Integer, primary_key = True)
     title = Column(String(120), unique = True, nullable = False)
     release_date = Column(DateTime, nullable = False)
+    actors = db.relationship('Actor', secondary = movies_actors, backref = 'movies', lazy = True)
 
     def insert(self):
         db.session.add(self)
