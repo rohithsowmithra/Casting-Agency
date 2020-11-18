@@ -25,7 +25,7 @@ def after_request(response):
 
   return response
 
-@aAPP.route('/')
+@APP.route('/')
 def index():
     return render_template('index.html')
 
