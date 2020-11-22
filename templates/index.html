@@ -34,9 +34,9 @@
         <a class="nav-link disabled" href="#">Add Actors</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://www.google.com">
-      <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login" />
-    </form>
+    <a id="loginButton" class="button is-primary" href="https://{{ auth_server_details.auth_host }}/authorize?audience={{ auth_server_details.audience }}&response_type=token&client_id={{ auth_server_details.client_id }}&redirect_uri={{ auth_server_details.redirect_url }}">
+						<strong>Log in</strong>
+					</a>
   </div>
 </nav>
 
