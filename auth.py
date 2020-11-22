@@ -2,11 +2,12 @@ import json
 from flask import request
 from functools import wraps
 from jose import jwt
-from os import environ
+import os
 
-AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN', 'dnsf.us.auth0.com')
-ALGORITHMS = ['RS256']
-API_AUDIENCE = environ.get('API_AUDIENCE', 'cast-agency')
+
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+ALGORITHMS = os.environ.get('ALGORITHMS')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -121,4 +122,4 @@ def requires_auth(permission = ''):
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
         return wrapper
-    return requires_auth_decorator()
+    return requires_auth_decorator
