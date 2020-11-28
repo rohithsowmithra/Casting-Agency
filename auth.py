@@ -2,6 +2,7 @@ import json
 from flask import request
 from functools import wraps
 from jose import jwt
+from urllib.request import urlopen
 import os
 
 
@@ -45,9 +46,8 @@ def get_token_auth_header():
     return auth_token
 
 def verify_decode_jwt(token):
-    jwks = request.get('https://dev-wsb8jitr.auth0.com/.well-known/jwks.json')
-    jwks = jwks.json()
-
+    jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
+    jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}
     if 'kid' not in unverified_header:
