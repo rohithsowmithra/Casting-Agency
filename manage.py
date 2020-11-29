@@ -1,18 +1,20 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
-from app import APP
+from app import app
 from models import db, Movie, Actor
 
-migrate = Migrate(APP, db)
-manager = Manager(APP)
+migrate = Migrate(app, db)
+manager = Manager(app)
 
+
+# manager command to seed data. Command: "python manage.py seed"
 @manager.command
 def seed():
     """Creating initial few records in our database"""
 
-    actor1 = Actor(name = 'Actor-1', age = '35', gender = 'Male')
-    actor2 = Actor(name = 'Actor-2', age = '40', gender = 'Feale')
-    actor3 = Actor(name = 'Actor-3', age = '45', gender = 'Male')
+    actor1 = Actor(name='Actor-1', age=35, gender='Male')
+    actor2 = Actor(name='Actor-2', age=40, gender='Feale')
+    actor3 = Actor(name='Actor-3', age=45, gender='Male')
 
     actor1.insert()
     actor2.insert()
@@ -30,7 +32,11 @@ def seed():
     movie2.insert()
     movie3.insert()
 
+
 manager.add_command('db', MigrateCommand)
+
+# main method
+
 
 if __name__ == '__main__':
     manager.run()
