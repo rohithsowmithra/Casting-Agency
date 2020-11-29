@@ -209,6 +209,9 @@ def update_actor(payload, actor_id):
     if not actor:
         abort(404)
 
+    if name == '' and age == '' and gender == '':
+        abort(422)
+
     try:
         if name:
             actor.name = name
