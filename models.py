@@ -3,28 +3,53 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, String, Integer, DateTime, Table, ForeignKey
 
 db = SQLAlchemy()
-
 db_path = os.environ.get('DATABASE_URL')
 
-def setup_db(app, db_path = db_path):
+'''
+setup_db(app)
+    binds a flask application and a SQLAlchemy service
+'''
+
+
+def setup_db(app, db_path=db_path):
     app.config['SQLALCHEMY_DATABASE_URI'] = db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
-    #db.create_all()
+    # db.create_all()
+
+
+'''
+movies_actors table
+'''
+
 
 movies_actors = Table('movies_actors', db.Model.metadata,
-                      Column('movie_id', Integer, ForeignKey('movie.id'), primary_key = True),
-                      Column('actor_id', Integer, ForeignKey('actor.id'), primary_key = True)
+                      Column('movie_id', Integer,
+                             ForeignKey('movie.id'),
+                             primary_key=True),
+                      Column('actor_id', Integer,
+                             ForeignKey('actor.id'),
+                             primary_key=True)
                       )
+
+
+'''
+movie table
+'''
+
 
 class Movie(db.Model):
     __tablename__ = 'movie'
 
-    id = Column(Integer, primary_key = True)
-    title = Column(String(120), unique = True, nullable = False)
-    release_date = Column(DateTime, nullable = False)
-    actors = db.relationship('Actor', secondary = movies_actors, backref = 'movies', lazy = True)
+    id = Column(Integer, primary_key=True)
+    title = Column(String(120), unique=True, nullable=False)
+    release_date = Column(DateTime, nullable=False)
+    actors = db.relationship('Actor',
+                             secondary=movies_actors,
+                             backref='movies',
+                             lazy=True
+                             )
 
     def insert(self):
         db.session.add(self)
@@ -50,13 +75,19 @@ class Movie(db.Model):
     def __repr__(self):
         return f"< Movie {self.id}, {self.title}>"
 
+
+'''
+actor table
+'''
+
+
 class Actor(db.Model):
     __tablename__ = 'actor'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String, nullable = False)
-    age = Column(Integer, nullable = False)
-    gender = Column(String, nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    age = Column(Integer, nullable=False)
+    gender = Column(String, nullable=False)
 
     def insert(self):
         db.session.add(self)
