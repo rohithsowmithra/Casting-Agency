@@ -19,7 +19,10 @@ def get_token_auth_header():
     token = request.headers.get('Authorization')
 
     if not token:
-        raise("no authorization header found", 401)
+        raise AuthError({
+            'code': 'invalid_request',
+            'description': 'no authorization header found"'
+        }, 401)
 
     token_parts = token.split()
 
