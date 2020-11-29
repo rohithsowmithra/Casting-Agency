@@ -77,6 +77,156 @@ The APIs will return these error types when requests fail.
  - 422: unprocessable entity
  - 500: internal server error
  
- ### Endpoints
- GET /movies
- 
+### Endpoints
+**GET /movies**
+ - fetches all the movies from the database if the user has 'vie:movies' permission.
+Sample Response:
+```
+{
+    "movies": [
+        {
+            "id": 1,
+            "release_date": "Thu, 01 Jan 1970 00:00:00 GMT",
+            "title": "Movie-1"
+        },
+        {
+            "id": 2,
+            "release_date": "Wed, 01 Jan 1975 00:00:00 GMT",
+            "title": "Movie-2"
+        }
+    ],
+    "success": true
+}
+``` 
+**POST /movies**
+- creates a new movie if the user has 'add:movies' permission.
+Sample Request:
+```
+{
+  "title": "Movie-3",
+  "release_date": "2020-01-01"
+}
+```
+Sample Response:
+```
+{
+  'success': true,
+  'movie': 'Movie-3'
+}
+```
+**PATCH /movies/<movie_id>**
+- updates movie details if the user has 'update:movies' permission.
+- request argument: movie_id: int
+Sample Request:
+```
+{
+  "title": "Movie-X",
+  "release_date": "2022-01-01"
+}
+```
+Sample Response:
+```
+{
+  'success': true,
+  'movie': {
+              "id": 3,
+              "title": "Movie-X",
+              "release_date": "2022-01-01"
+            }
+}
+```
+**DELETE /movies/<movie_id>**
+- deletes a movie from the database if the user has 'delete:movies' permission.
+- request argument: movie_id: int
+Sample Response:
+```
+{
+  'success': true,
+  'movie': 3
+}
+```
+**GET /actors**
+- fetches all actors from the database if the user has 'view:actors' permission.
+Sample Response:
+```
+{
+    "actors": [
+        {
+            "age": 35,
+            "gender": "Male",
+            "id": 1,
+            "name": "Actor-1"
+        },
+        {
+            "age": 40,
+            "gender": "Female",
+            "id": 2,
+            "name": "Actor-2"
+        }
+    ],
+    "success": true
+}
+```
+**POST /actors**
+- creates a new actor in database if user has 'add:actors' permission.
+Sample Request:
+```
+{
+    "name": "Actor-3",
+    "age": 30,
+    "gender": "Male"
+}
+```
+Sample Response:
+```
+{
+  'success': true,
+  'actor': 'Actor-3'
+}
+```
+**PATCH /actors/<actor_id>**
+- updates actor's details in the database if the user has 'update:actors' permission.
+- request argument: actor_id: int
+Sample Request:
+```
+{
+    "name": "Actor-X",
+    "age": "45",
+    "gender": "Male"
+}
+```
+Sample Response:
+```
+{
+  'success': true,
+  "actors": [
+        {
+            "age": 45,
+            "gender": "Male",
+            "id": 1,
+            "name": "Actor-X"
+        }
+}
+```
+**DELETE /actors/<actor_id>**
+- deletes an actor from the database if the user has 'delete:actors' permission.
+- request argument: actor_id:int
+Sample Response:
+```
+{
+  'success': true,
+  'actor': 1
+}
+```
+
+## Testing
+To run the test, execute below commands:
+```
+python3 manage.py db upgrade
+python3 manage.py seed
+python3 test_app.py
+```
+Alternatively, you may also use the udac-casting-agency-pm-collection.json (postman collection) in this directory to run the unit tests.
+
+## Authors
+Rohith has authored all the files and and documentation (Readme.md) in this project.
