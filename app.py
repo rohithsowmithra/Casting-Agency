@@ -1,6 +1,5 @@
 import os
 from flask import Flask, request, abort, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Movie, Actor, db
 from auth import requires_auth, AuthError
@@ -9,56 +8,88 @@ import sys
 
 
 def create_app(test_config=None):
-  # create and configure the app
-  app = Flask(__name__)
-  setup_db(app)
+    # create and configure the app
+    app = Flask(__name__)
+    setup_db(app)
 
-  app.config['SECRET_KEY'] = 'dev'
+    app.config['SECRET_KEY'] = 'dev'
 
-  CORS(app, resources={r"/.*": {"origins": "*"}})
+    '''
+    Set up CORS. Allow '*' for origins.
+    '''
+    CORS(app, resources={r"/.*": {"origins": "*"}})
 
-  return app
+    return app
+
 
 app = create_app()
+
+
+'''
+Use the after_request decorator to set Access-Control-Allow headers
+'''
 
 
 @app.after_request
 def after_request(response):
 
-  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-  response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers',
+                         'Content-Type,Authorization,true')
+    response.headers.add('Access-Control-Allow-Methods',
+                         'GET, POST, PUT, PATCH, DELETE, OPTIONS')
 
-  return response
+    return response
+
+
+'''
+Endpoint for application homepage
+'''
 
 
 @app.route('/')
 def index():
-  auth_server_details = {
-    'auth_host': os.environ.get('AUTH0_DOMAIN'),
-    'audience': os.environ.get('API_AUDIENCE'),
-    'client_id': os.environ.get('CLIENT_ID'),
-    'redirect_url': os.environ.get('AUTH0_REDIRECT_URL')
-  }
-  print("auth server details are: "+json.dumps(auth_server_details))
-  return render_template('index.html', auth_server_details = auth_server_details)
+    auth_server_details = {
+        'auth_host': os.environ.get('AUTH0_DOMAIN'),
+        'audience': os.environ.get('API_AUDIENCE'),
+        'client_id': os.environ.get('CLIENT_ID'),
+        'redirect_url': os.environ.get('AUTH0_REDIRECT_URL')
+        }
+
+    return render_template('index.html',
+                           auth_server_details=auth_server_details
+                           )
 
 
-@app.route('/movies', methods = ['GET'])
+'''
+Endpoint to fetch all movies.
+This will work only if 'view:movies' permission is in the token.
+This endpoint will return the list of movies,
+'''
+
+
+@app.route('/movies', methods=['GET'])
 @requires_auth('view:movies')
 def get_all_movies(payload):
-  try:
-    all_movies = Movie.query.all()
-    movies = [movie.format() for movie in all_movies]
-    return jsonify({
-      'success': True,
-      'movies': movies
-      }), 200
-  except Exception:
-      print(sys.exc_info())
-      abort(422)
+    try:
+        all_movies = Movie.query.all()
+        movies = [movie.format() for movie in all_movies]
+        return jsonify({
+            'success': True,
+            'movies': movies
+            }), 200
+    except Exception:
+        print(sys.exc_info())
+        abort(422)
 
 
-@app.route('/movies', methods = ['POST'])
+'''
+Endpoint to create a movie.
+This will work only if 'add:movies' permission is in the token.
+This endpoint will return the newly created movie title,
+'''
+
+
+@app.route('/movies', methods=['POST'])
 @requires_auth('add:movies')
 def add_movie(payload):
     body = request.get_json()
@@ -73,7 +104,7 @@ def add_movie(payload):
     release_date = body['release_date']
 
     try:
-        movie = Movie(title=title, release_date = release_date)
+        movie = Movie(title=title, release_date=release_date)
         movie.insert()
     except Exception:
         print(sys.exc_info())
@@ -85,7 +116,14 @@ def add_movie(payload):
             }), 201
 
 
-@app.route('/movies/<int:movie_id>', methods = ['PATCH'])
+'''
+Endpoint to edit and update a movie.
+This will work only if 'update:movies' permission is in the token.
+This endpoint will return the updated movie details,
+'''
+
+
+@app.route('/movies/<int:movie_id>', methods=['PATCH'])
 @requires_auth('update:movies')
 def update_movie(payload, movie_id):
     body = request.get_json()
@@ -126,7 +164,14 @@ def update_movie(payload, movie_id):
         }), 200
 
 
-@app.route('/movies/<int:movie_id>', methods = ['DELETE'])
+'''
+Endpoint to delete a movie.
+This will work only if 'delete:movies' permission is in the token.
+This endpoint will return the deleted movie' id,
+'''
+
+
+@app.route('/movies/<int:movie_id>', methods=['DELETE'])
 @requires_auth('delete:movies')
 def delete_movie(payload, movie_id):
 
@@ -147,7 +192,14 @@ def delete_movie(payload, movie_id):
         }), 200
 
 
-@app.route('/actors', methods = ['GET'])
+'''
+Endpoint to fetch all actors.
+This will work only if 'view:actors' permission is in the token.
+This endpoint will return the actors details,
+'''
+
+
+@app.route('/actors', methods=['GET'])
 @requires_auth('view:actors')
 def get_all_actors(payload):
     try:
@@ -161,7 +213,14 @@ def get_all_actors(payload):
         abort(422)
 
 
-@app.route('/actors', methods = ['POST'])
+'''
+Endpoint to create an actor in database.
+This will work only if 'add:actors' permission is in the token.
+This endpoint will return the newly created actor's name,
+'''
+
+
+@app.route('/actors', methods=['POST'])
 @requires_auth('add:actors')
 def add_actor(payload):
     body = request.get_json()
@@ -177,7 +236,7 @@ def add_actor(payload):
     gender = body['gender']
 
     try:
-        actor = Actor(name = name, age = age, gender = gender)
+        actor = Actor(name=name, age=age, gender=gender)
         actor.insert()
     except Exception:
         print(sys.exc_info())
@@ -189,7 +248,14 @@ def add_actor(payload):
         }), 201
 
 
-@app.route('/actors/<int:actor_id>', methods = ['PATCH'])
+'''
+Endpoint to edit and update actor's details.
+This will work only if 'update:actors' permission is in the token.
+This endpoint will return the updated actor's details,
+'''
+
+
+@app.route('/actors/<int:actor_id>', methods=['PATCH'])
 @requires_auth('update:actors')
 def update_actor(payload, actor_id):
     body = request.get_json()
@@ -233,7 +299,14 @@ def update_actor(payload, actor_id):
         }), 200
 
 
-@app.route('/actors/<int:actor_id>', methods = ['DELETE'])
+'''
+Endpoint to delete an actor.
+This will work only if 'delete:actors' permission is in the token.
+This endpoint will return deleted actor's id,
+'''
+
+
+@app.route('/actors/<int:actor_id>', methods=['DELETE'])
 @requires_auth('delete:actors')
 def delete_actor(payload, actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).first()
@@ -253,7 +326,9 @@ def delete_actor(payload, actor_id):
         }), 200
 
 
-# Error Handlers
+'''
+Error handlers for all expected errors.
+'''
 
 
 @app.errorhandler(400)
@@ -299,6 +374,9 @@ def auth_error(error):
         'code': error.status_code,
         'message': error.error
     }), error.status_code
+
+
+# main method
 
 
 if __name__ == '__main__':

@@ -70,7 +70,7 @@ class CastAgencyTestCase(unittest.TestCase):
     def test_201_when_producer_adds_movie(self):
         data = {
             'title': 'Test-Movie-999',
-            'release_date': '2000-01-01'
+            'release_date': '2020-01-01'
         }
         response = self.client.post('/movies',
                                     json=data,
@@ -202,7 +202,9 @@ class CastAgencyTestCase(unittest.TestCase):
                          headers=set_auth_header('producer')
                          )
         movie_id = Movie.query.first().id
-        response = self.client.delete(f'/movies/{movie_id}', headers=set_auth_header('producer'))
+        response = self.client.delete(f'/movies/{movie_id}',
+                                      headers=set_auth_header('producer')
+                                      )
         resp_data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
