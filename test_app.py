@@ -56,7 +56,7 @@ class CastAgencyTestCase(unittest.TestCase):
 
     def test_201_when_producer_adds_movie(self):
         data = {
-            'title': 'Test-Movie99',
+            'title': 'Test-Movie-99',
             'release_date': '01-01-2000'
         }
         response = self.client.post('/movies', json=data, headers=set_auth_header('producer'))
@@ -69,7 +69,7 @@ class CastAgencyTestCase(unittest.TestCase):
 
     def test_401_when_director_adds_movie(self):
         data = {
-            'title': 'Test-Movie99',
+            'title': 'Test-Movie-100',
             'release_date': '01-01-2000'
         }
         response = self.client.post('/movies', json=data, headers=set_auth_header('director'))
@@ -81,7 +81,7 @@ class CastAgencyTestCase(unittest.TestCase):
 
     def test_401_when_assistant_adds_movie(self):
         data = {
-            'title': 'Test-Movie99',
+            'title': 'Test-Movie-101',
             'release_date': '01-01-2000'
         }
         response = self.client.post('/movies', json=data, headers=set_auth_header('assistant'))
@@ -108,7 +108,7 @@ class CastAgencyTestCase(unittest.TestCase):
             "title": "Test-Movie",
             "release_date": "01-01-2001"
         }
-        movie_id = Movie.query.filter(Movie.title == 'Test-Movie').first().id
+        movie_id = Movie.query.first().id
         response = self.client.patch(f'/movies/{movie_id}', json=data, headers=set_auth_header('producer'))
         resp_data = json.loads(response.data)
 
@@ -121,7 +121,7 @@ class CastAgencyTestCase(unittest.TestCase):
             "title": "Test-Movie1",
             "release_date": "01-01-2002"
         }
-        movie_id = Movie.query.filter(Movie.title == 'Test-Movie1').first().id
+        movie_id = Movie.query.first().id
         response = self.client.patch(f'/movies/{movie_id}', json=data, headers=set_auth_header('director'))
         resp_data = json.loads(response.data)
 
@@ -134,7 +134,7 @@ class CastAgencyTestCase(unittest.TestCase):
             "title": "Test-Movie",
             "release_date": "01-01-2003"
         }
-        movie_id = Movie.query.filter(Movie.title == 'Test-Movie').first().id
+        movie_id = Movie.query.first().id
         response = self.client.patch(f'/movies/{movie_id}', json=data, headers=set_auth_header('assistant'))
         resp_data = json.loads(response.data)
 
@@ -147,7 +147,7 @@ class CastAgencyTestCase(unittest.TestCase):
             "title": "",
             "release_date": ""
         }
-        movie_id = Movie.query.filter(Movie.title == 'Test-Movie').first().id
+        movie_id = Movie.query.first().id
         response = self.client.patch(f'/movies/{movie_id}', json=data, headers=set_auth_header('producer'))
         resp_data = json.loads(response.data)
 
@@ -156,7 +156,12 @@ class CastAgencyTestCase(unittest.TestCase):
 
 
     def test_200_when_producer_deletes_movie(self):
-        movie_id = Movie.query.filter(Movie.title == 'Test-Movie2').first().id
+        data = {
+            "title": "Test-Movie-999",
+            "release_date": ""
+        }
+        self.client.post('/movies', json=data, headers=set_auth_header('producer'))
+        movie_id = Movie.query.first().id
         response = self.client.delete(f'/movies/{movie_id}', headers=set_auth_header('producer'))
         resp_data = json.loads(response.data)
 
