@@ -100,10 +100,13 @@ def update_movie(payload, movie_id):
     release_date = body['release_date']
     movie = Movie.query.filter(Movie.id == movie_id).first()
 
-    try:
-        if not movie:
-            abort(404)
+    if not movie:
+        abort(404)
 
+    if title == '' and release_date == '':
+        abort(422)
+
+    try:
         if title:
             movie.title = title
 
@@ -127,12 +130,12 @@ def update_movie(payload, movie_id):
 @requires_auth('delete:movies')
 def delete_movie(payload, movie_id):
 
+    movie = Movie.query.filter(Movie.id == movie_id).first()
+
+    if not movie:
+        abort(404)
+
     try:
-        movie = Movie.query.filter(Movie.id == movie_id).first()
-
-        if not movie:
-            abort(404)
-
         movie.delete()
     except Exception:
         print(sys.exc_info())
@@ -203,10 +206,10 @@ def update_actor(payload, actor_id):
 
     actor = Actor.query.filter(Actor.id == actor_id).first()
 
-    try:
-        if not actor:
-            abort(404)
+    if not actor:
+        abort(404)
 
+    try:
         if name:
             actor.name = name
         if age:
@@ -232,9 +235,10 @@ def update_actor(payload, actor_id):
 def delete_actor(payload, actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).first()
 
+    if not actor:
+        abort(404)
+
     try:
-        if not actor:
-            abort(404)
         actor.delete()
     except Exception:
         print(sys.exc_info())
