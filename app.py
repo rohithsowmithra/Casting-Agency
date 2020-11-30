@@ -290,24 +290,28 @@ def update_actor(payload, actor_id):
     if not ('name' in body or 'age' in body or 'gender' in body):
         abort(400)
 
-    name = body['name']
-    age = body['age']
-    gender = body['gender']
+    if 'name' in body:
+        name = body['name']
+    if 'age' in body:
+        age = body['age']
+    if 'gender' in body:
+        gender = body['gender']
 
     actor = Actor.query.filter(Actor.id == actor_id).first()
 
     if not actor:
         abort(404)
 
-    if name == '' and age == '' and gender == '':
-        abort(422)
+    if 'name' in body and 'age' in body and 'gender' in body:
+        if name == '' and age == '' and gender == '':
+            abort(422)
 
     try:
-        if name:
+        if 'name' in body:
             actor.name = name
-        if age:
+        if 'age' in body:
             actor.age = age
-        if gender:
+        if 'gender' in body:
             actor.gender = gender
 
         actor.update()
