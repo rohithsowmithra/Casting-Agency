@@ -103,8 +103,17 @@ def add_movie(payload):
     title = body['title']
     release_date = body['release_date']
 
+    if 'actors' in body:
+        actors = body['actors']
+        actors_list = []
+        for i in range(len(actors)):
+            actor = Actor.query.filter(Actor.name == actors[i]).first()
+            if not (actor is None):
+                actors_list.append(actor)
     try:
         movie = Movie(title=title, release_date=release_date)
+        if 'actors' in body:
+            movie.actors = actors_list
         movie.insert()
     except Exception:
         print(sys.exc_info())
@@ -131,25 +140,40 @@ def update_movie(payload, movie_id):
     if not body:
         abort(400)
 
-    if not ('title' in body or 'release_date' in body):
+    if not ('title' in body or 'release_date' in body or 'actors' in body):
         abort(400)
 
-    title = body['title']
-    release_date = body['release_date']
+    if 'title' in body:
+        title = body['title']
+    if 'release_date' in body:
+        release_date = body['release_date']
+
+    if 'actors' in body:
+        actors = body['actors']
+        actors_list = []
+        for i in range(len(actors)):
+            actor = Actor.query.filter(Actor.name == actors[i]).first()
+            if not (actor is None):
+                actors_list.append(actor)
+
     movie = Movie.query.filter(Movie.id == movie_id).first()
 
     if not movie:
         abort(404)
 
-    if title == '' and release_date == '':
-        abort(422)
+    if 'title' in body and 'release_date' in body:
+        if title == '' and release_date == '' and 'actors' not in body:
+            abort(422)
 
     try:
-        if title:
+        if 'title' in body:
             movie.title = title
 
-        if release_date:
+        if 'release_date' in body:
             movie.release_date = release_date
+
+        if 'actors' in body:
+            movie.actors = actors_list
 
         movie.update()
 
