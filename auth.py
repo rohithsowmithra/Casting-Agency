@@ -10,10 +10,22 @@ AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
 ALGORITHMS = os.environ.get('ALGORITHMS')
 API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
+
+'''
+AuthError Exception: A standardized way to communicate auth failure modes
+'''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
+
+
+'''
+get_token_auth_header(): returns token if the header is sent in a proper way
+'''
+
 
 def get_token_auth_header():
     token = request.headers.get('Authorization')
@@ -47,6 +59,13 @@ def get_token_auth_header():
     auth_token = token_parts[1]
 
     return auth_token
+
+
+'''
+verify_decode_jwt():
+To validate the signature of jwt and return the decoded payload.
+'''
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -89,7 +108,8 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description': 'Incorrect claims. '
+                               'Please, check the audience and issuer.'
             }, 401)
         except Exception:
             raise AuthError({
@@ -100,6 +120,14 @@ def verify_decode_jwt(token):
         'code': 'invalid_header',
         'description': 'Unable to find the appropriate key.'
     }, 400)
+
+
+'''
+check_permissions():
+checks if a permission is present in decoded payload.
+Raises appropriate error if not found.
+'''
+
 
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
@@ -116,7 +144,8 @@ def check_permissions(permission, payload):
 
     return True
 
-def requires_auth(permission = ''):
+
+def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
