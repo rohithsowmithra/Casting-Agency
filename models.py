@@ -69,7 +69,8 @@ class Movie(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'release_date': self.release_date
+            'release_date': self.release_date,
+            'actors': [actor.name for actor in self.actors]
         }
 
     def __repr__(self):
@@ -108,7 +109,8 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender
+            'gender': self.gender,
+            'movies': [movie.title for movie in self.movies]
         }
 
     def __repr__(self):
