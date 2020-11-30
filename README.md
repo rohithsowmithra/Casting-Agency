@@ -79,17 +79,25 @@ The APIs will return these error types when requests fail.
  
 ### Endpoints
 **GET /movies**
- - fetches all the movies from the database if the user has 'vie:movies' permission.
+ - fetches all the movies and its actors from the database if the user has 'vie:movies' permission.
 Sample Response:
 ```
 {
     "movies": [
         {
+            "actors": [
+                "Actor-1",
+                "Actor-2"
+            ],
             "id": 1,
             "release_date": "Thu, 01 Jan 1970 00:00:00 GMT",
             "title": "Movie-1"
         },
         {
+            "actors": [
+                "Actor-3",
+                "Actor-2"
+            ],
             "id": 2,
             "release_date": "Wed, 01 Jan 1975 00:00:00 GMT",
             "title": "Movie-2"
@@ -104,7 +112,8 @@ Sample Request:
 ```
 {
   "title": "Movie-3",
-  "release_date": "2020-01-01"
+  "release_date": "2020-01-01",
+  "actors": ["Actor-1", "Actor-2", "Actor-3", "Actor-X"]
 }
 ```
 Sample Response:
@@ -117,22 +126,28 @@ Sample Response:
 **PATCH /movies/<movie_id>**
 - updates movie details if the user has 'update:movies' permission.
 - request argument: movie_id: int
+- can pass a single argument or combination of args that needs to be updated.
 Sample Request:
 ```
 {
   "title": "Movie-X",
-  "release_date": "2022-01-01"
+  "release_date": "2022-01-01",
+  "actors": ["Actor-1", "Actor-3"]
 }
-```
+``` 
 Sample Response:
 ```
 {
-  'success': true,
-  'movie': {
-              "id": 3,
-              "title": "Movie-X",
-              "release_date": "2022-01-01"
-            }
+    "movie": {
+        "actors": [
+            "Actor-1",
+            "Actor-3"
+        ],
+        "id": 3,
+        "release_date": "Sat, 01 Jan 2022 00:00:00 GMT",
+        "title": "Movie-X"
+    },
+    "success": true
 }
 ```
 **DELETE /movies/<movie_id>**
@@ -146,7 +161,7 @@ Sample Response:
 }
 ```
 **GET /actors**
-- fetches all actors from the database if the user has 'view:actors' permission.
+- fetches all actors and their movies from the database if the user has 'view:actors' permission.
 Sample Response:
 ```
 {
@@ -155,13 +170,21 @@ Sample Response:
             "age": 35,
             "gender": "Male",
             "id": 1,
+            "movies": [
+                "Movie-1",
+                "Movie-3"
+            ],
             "name": "Actor-1"
         },
         {
-            "age": 40,
-            "gender": "Female",
-            "id": 2,
-            "name": "Actor-2"
+            "age": 45,
+            "gender": "Male",
+            "id": 3,
+            "movies": [
+                "Movie-2",
+                "Movie-3"
+            ],
+            "name": "Actor-3"
         }
     ],
     "success": true
@@ -187,6 +210,7 @@ Sample Response:
 **PATCH /actors/<actor_id>**
 - updates actor's details in the database if the user has 'update:actors' permission.
 - request argument: actor_id: int
+- can pass a single argument or combination of args that needs to be updated.
 Sample Request:
 ```
 {
