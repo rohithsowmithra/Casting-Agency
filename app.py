@@ -78,7 +78,7 @@ def get_callback_token(token=None):
 
 
 @app.route('/landing')
-def render_landing_page()
+def render_landing_page():
     return render_template('landing.html',
                            token=session['token'])
 
