@@ -40,6 +40,7 @@ This will install all of the required packages we selected within the requiremen
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
 - [SQLAlchemy](https://flask.palletsprojects.com/en/1.1.x/) and [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) are libraries to handle the lightweight sqlite database.
 - [jose](https://python-jose.readthedocs.io/en/latest/) JavaScript Object Signing and Encryption for JWTs. Useful for encoding, decoding, and verifying JWTS.
+- [PostgreSQL](https://www.postgresql.org/) It is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads.
 
 ## Authentication
 APIs in this project can be accessed only by below users.
@@ -223,7 +224,7 @@ Sample Response:
 ```
 {
   'success': true,
-  "actors": [
+  "actor": [
         {
             "age": 45,
             "gender": "Male",
