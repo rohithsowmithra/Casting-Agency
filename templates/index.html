@@ -1,55 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <style>
+    td {
+      padding: 5px;
+    }
+</style>
+</head>
+<body>
 
-    <title>Home</title>
-  </head>
-  <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Audacious</a>
+<nav class="navbar navbar-expand-lg navbar-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+  <div class="navbar-collapse collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" id="text">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Movies <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Actors</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Add Movies</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Add Actors</a>
+        <a class="nav-link" href="{{ url_for('index') }}">Audacious <span class="sr-only">(current)</span></a>
       </li>
     </ul>
-    <a id="loginButton" class="button is-primary" href="https://{{ auth_server_details.auth_host }}/authorize?audience={{ auth_server_details.audience }}&response_type=token&client_id={{ auth_server_details.client_id }}&redirect_uri={{ auth_server_details.redirect_url }}">
-						<strong>Log in</strong>
-					</a>
+    <form class="form-inline my-2 my-lg-0">
+       <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://{{ auth_server_details.auth_host }}/authorize?audience={{ auth_server_details.audience }}&response_type=token&client_id={{ auth_server_details.client_id }}&redirect_uri={{ auth_server_details.redirect_url }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     </ul>
+    </form>
   </div>
 </nav>
 
-<div class="container">
 
-<div class="jumbotron">
-  <h1 class="display-4">Audacious Casting Agency!</h1>
-  <p class="lead">Hi there! Welcome to our agency.<br><br> Our agency is responsible for creating movies, managing and assigning actors to the movies. This is a digital platform of our agency where you can login and modify content if you're our agency member or you may take a look at the movies and the actors casted by our agency.</p>
+<div class="jumbotron text-center">
+  <h1>Udac-Casting-Agency</h1>
+  <p>Hi there! Welcome to our agency.<br> Please assume either of the roles below and login to get the auth token, using which you can access our apis.</p>
+</div>
+
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3><b>Casting Assistant</b></h3>
+      <p>========================</p>
+      <p><b>Email ID</b>: assistant@udac.com</p>
+      <p><b>Password</b>: assistant@123</p>
+      <br>
+      <p><b>Permissions:</b></p>
+      <p>--------------------------------------------</p>
+      <table>
+        <tr>
+          <td>view:movies</td>
+          <td>view:actors</td>
+      </table>
+    </div>
+    <div class="col-sm-4">
+      <h3><b>Casting Director</b></h3>
+      <p>=======================</p>
+      <p><b>Email ID</b>: director@udac.com</p>
+      <p><b>Password</b>: director@123</p>
+      <br>
+      <p><b>Permissions:</b></p>
+      <p>--------------------------------------------</p>
+      <table>
+        <tr>
+          <td>view:movies</td>
+          <td>view:actors</td>
+        </tr>
+        <tr>
+          <td>add:actors</td>
+          <td>delete:actors</td>
+        </tr>
+        <tr>
+          <td>update:movies</td>
+          <td>update:actors</td>
+      </tr>
+      </table>
+    </div>
+    <div class="col-sm-4">
+      <h3><b>Executive Producer</b></h3>
+      <p>========================</p>
+      <p><b>Email ID</b>: producer@udac.com</p>
+      <p><b>Password</b>: producer@123</p>
+      <br>
+      <p><b>Permissions:</b></p>
+      <p>--------------------------------------------</p>
+      <table>
+        <tr>
+          <td>view:movies</td>
+          <td>view:actors</td>
+        </tr>
+        <tr>
+          <td>add:movies</td>
+          <td>add:actors</td>
+        </tr>
+        <tr>
+          <td>update:movies</td>
+          <td>update:actors</td>
+      </tr>
+      <tr>
+          <td>delete:movies</td>
+          <td>delete:actors</td>
+      </tr>
+      </table>
+    </div>
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-</div>
 </body>
 </html>
