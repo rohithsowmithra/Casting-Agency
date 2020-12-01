@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, abort, jsonify, render_template
+from flask import Flask, request, abort, jsonify
+from flask import render_template, redirect, url_for
 from flask_cors import CORS
 from models import setup_db, Movie, Actor, db
 from auth import requires_auth, AuthError
@@ -58,6 +59,21 @@ def index():
     return render_template('index.html',
                            auth_server_details=auth_server_details
                            )
+
+
+'''
+Endpoint to capture token from callback
+'''
+
+
+@app.route('/callback')
+@app.route("/callback/<token>")
+def get_callback_token(token=None):
+    if token is None:
+        return render_template('index.html')
+    else:
+        access_token = request.args.get('access_token')
+        return redirect(url_for('index', token=access_token))
 
 
 '''
