@@ -17,10 +17,10 @@ This project is hosted on heroku and can be accessed from [here](https://udac-ca
 
 ## Pre-requisites and Local Development
 Developers using this project should already have python3 and pip installed. This uses [Auth0](https://auth0.com/) for authentication and authorization. So, developers working on this project should have an auth0 account.
-Also, as this project is deployed on [Heroku](https://www.heroku.com/), it is advised tp create heroku account and setup the app for deployment.
+Also, as this project is deployed on [Heroku](https://www.heroku.com/), it is advised to create heroku account and setup the app for deployment.
 
 ## Dependencies
-This project uses Flask to build the apis. Endpoints needs to be integrated with Auth0 for Authentication and Authorization. To start off with backend, install the requirements specified in requirements.txt.
+This project uses Flask to build the apis. Endpoints needs to be integrated with Auth0 for Authentication and Authorization. To know more about dependencies for this project, please take a a look at requirements.txt file.
 
 ### Installing Dependencies
 #### Python
