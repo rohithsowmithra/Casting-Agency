@@ -259,10 +259,10 @@ python3 manage.py db upgrade
 python3 manage.py seed
 python3 test_app.py
 ```
-**Note** Currently this app is configured to run tests on app deployed on heroku. To run tests on your locally running app change environment variable 'DATABASE_URL' to 'DATABASE_URL_LOCAL' in test_app.py
+**Note** To run unit tests on app hosted on heroku, you need to change the 'DATABASE_URL' parameter in setup.sh file.
 
 
-Alternatively, you may also use the udac-casting-agency.postman_collection.json (postman collection) present in this directory to run the unit tests.
+Alternatively, you may also use 'udac-casting-agency.postman_collection.json' (postman collection) present in this directory to run the unit tests on local as well as heroku by changing the {{HOST}} parameter in the collection.
 
 ## Authors
 Rohith has authored all the files and and documentation (Readme.md) in this project.
