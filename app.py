@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, session
 from flask import render_template, redirect, url_for
 from flask_cors import CORS
 from models import setup_db, Movie, Actor, db
@@ -73,7 +73,15 @@ def get_callback_token(token=None):
         return render_template('index.html')
     else:
         access_token = request.args.get('access_token')
-        return redirect(url_for('index', token=access_token))
+        session['token'] = access_token
+        return redirect(url_for('render_landing_page', token=access_token))
+
+
+@app.route('/landing')
+def render_landing_page()
+    return render_template('landing.html',
+                           token=session['token'])
+
 
 
 '''
