@@ -1,10 +1,9 @@
 import os
-from flask import Flask, request, abort, jsonify, session
+from flask import Flask, request, abort, jsonify
 from flask import render_template, redirect, url_for
 from flask_cors import CORS
-from models import setup_db, Movie, Actor, db
+from models import setup_db, Movie, Actor
 from auth import requires_auth, AuthError
-import json
 import sys
 
 
@@ -54,34 +53,46 @@ def index():
         'audience': os.environ.get('API_AUDIENCE'),
         'client_id': os.environ.get('CLIENT_ID'),
         'redirect_url': os.environ.get('AUTH0_REDIRECT_URL')
-        }
-
+    }
     return render_template('index.html',
                            auth_server_details=auth_server_details
                            )
 
 
 '''
-Endpoint to capture token from callback
+Endpoint for auth0 callback
 '''
 
 
 @app.route('/callback')
-@app.route("/callback/<token>")
 def get_callback_token(token=None):
-    if token is None:
-        return render_template('index.html')
-    else:
-        access_token = request.args.get('access_token')
-        session['token'] = access_token
-        return redirect(url_for('render_landing_page', token=access_token))
+    return redirect(url_for('render_landing_page'))
+
+
+'''
+Endpoint for landing page to copy token
+'''
 
 
 @app.route('/landing')
 def render_landing_page():
-    return render_template('landing.html',
-                           token=session['token'])
+    return render_template('landing.html')
 
+
+'''
+Endpoint to logout from auth0
+'''
+
+
+@app.route('/logout')
+def logout():
+    auth_host = os.environ.get('AUTH0_DOMAIN')
+    client_id = os.environ.get('CLIENT_ID')
+    redirect_to_url = "https://" + auth_host \
+                      + "/v2/logout?client_id=" \
+                      + client_id + "&returnTo=" \
+                      + os.environ.get("HOME_URL")
+    return redirect(redirect_to_url)
 
 
 '''
@@ -432,4 +443,4 @@ def auth_error(error):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)
