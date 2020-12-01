@@ -1,0 +1,1069 @@
+{
+	"info": {
+		"_postman_id": "e24ee0bc-4875-4809-a121-1123626d351d",
+		"name": "udac-casting-agency",
+		"description": "has unit tests for all apis required for udacity casting agency project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "casting-assistant",
+			"item": [
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24d93961-c020-4114-a70b-270147a76604",
+								"exec": [
+									"pm.test(\"check if response has movies details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('movies');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c49ff89-06fc-494b-adcb-324ee23af833",
+								"exec": [
+									"pm.test(\"check if user gets 401 while adding a movie\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-111\",\n    \"release_date\": \"01-01-2000\",\n    \"actors\": [\"Actor-1\", \"Actor-2\", \"Actor-3\", \"Actor-X\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "360d3a23-d98c-4eac-9681-3137463bd9d1",
+								"exec": [
+									"pm.test(\"check if assistant gets 401 while editing\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-121\",\n    \"release_date\": \"01-01-2000\",\n    \"actors\": [\"Actor-1\", \"Actor-3\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2578aff9-cb5b-48a9-adc8-6cbe10dfb8dd",
+								"exec": [
+									"pm.test(\"check if assistant gets 401 while deleting a movie\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies/3",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93059d5b-e1c7-46e1-812a-9cabc9ebd2af",
+								"exec": [
+									"pm.test(\"check if response has actors details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actors');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f6865a0-cd2e-4471-a3b3-e2ca1c6aa882",
+								"exec": [
+									"pm.test(\"check if assistant gets 401 while adding actor\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-111\",\n    \"age\": 99,\n    \"gender\": \"Male\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbca5fe5-1775-42d6-a1f6-dd3a54c2c736",
+								"exec": [
+									"pm.test(\"check if assistant gets 401 while editing actor\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-121\",\n    \"age\": \"50\",\n    \"gender\": \"Male\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9cbaf9f9-7bdf-4ff4-a6b1-0e2c8941c767",
+								"exec": [
+									"pm.test(\"check if assistant gets 401 while deleting actor\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors/3",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "A casting assistant can view all actors and movies",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp5b2Mtb01pXzhRRThORmVWS00tUSJ9.eyJpc3MiOiJodHRwczovL2Ruc2YudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmYzFkOGJjMWE3NTUwMDA3NjA0OGNhNCIsImF1ZCI6ImNhc3RfYWdlbmN5IiwiaWF0IjoxNjA2ODIzMDE1LCJleHAiOjE2MDY5MDk0MTUsImF6cCI6IkpjeXh0NmtXSDlRelBVejI1TjNidDZ2T0NCMUdFTzM0Iiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJ2aWV3OmFjdG9ycyIsInZpZXc6bW92aWVzIl19.UT03dCy4BaMWHt6-A0n4USDehUJpQoAg3wR6EuL-_XCRXIMymZxQNgSMYnIA152A1kyJR3FZFOSL44xE5zXlpeeTetQV9n6LP350sA-XtJfFVY1NP_Qr2wunmMv7gvRGG3V7ApaWlnA1XxQBt5Y0XNRuMSQxor7lNtxn-BBI8bhDw-sm6xa00-spzFQNpt7Xav6IjdCVGOPYflXlZ1bd5So-IncgDRosGkguVQwZFK0A1WhfTYu0_jE3MYcoatVighsIi8Pe5V8yZwsGMxNaHUYoUCkxKkGHtJae_sMtnnGAvRyyUMdSs70N9tZcHF_jSW9hpJaRb0jVDQw_vlIolw",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "%7B%7Btoken%7D%7D",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c50c3cb-ecc5-4b84-bf77-6fd5ce1712ea",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2f0938e-d896-445b-a22c-6cb21d464972",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "casting-director",
+			"item": [
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "360b8338-ea85-4f41-afd5-e5a9bda5a2b6",
+								"exec": [
+									"pm.test(\"check if response has movies details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('movies');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "389c8cc0-5456-4a65-b65c-05ec9cc8134b",
+								"exec": [
+									"pm.test(\"check if director gets 401 while adding a movie\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-131\",\n    \"release_date\": \"01-01-2000\",\n    \"actors\": [\"Actor-1\", \"Actor-2\", \"Actor-X\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fc4387c-38a2-4c94-951b-2c1622e75345",
+								"exec": [
+									"pm.test(\"check if movie is successfully updated\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp.movie).to.have.any.key('release_date');",
+									"    pm.expect(resp.movie).to.have.any.key('actors');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-131\",\n    \"release_date\": \"01-01-2000\",\n    \"actors\": [\"Actor-1\", \"Actor-2\", \"Actor-X\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "272f45fb-6ae9-44bf-91e7-b7662fe628ad",
+								"exec": [
+									"pm.test(\"check if director gets 401 while deleting a movie\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies/3",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d6b1c10-4ffa-4c30-96b6-63b3e3937d83",
+								"exec": [
+									"pm.test(\"check if response has actors details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actors');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c04b721c-4ce1-4ad6-863b-e89a3e333ae2",
+								"exec": [
+									"pm.test(\"check if director can create an actor\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actor');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-131\",\n    \"age\": 55,\n    \"gender\": \"Male\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98aa7c61-f052-4fd7-8d17-10ef212802ae",
+								"exec": [
+									"pm.test(\"check if director can edit an actor\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp.actor).to.have.any.key('name');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-131\",\n    \"age\": 55,\n    \"gender\": \"Male\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd01f680-b117-425b-ae39-c69fbbc61635",
+								"exec": [
+									"pm.test(\"check if director can delete an actor\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actor');",
+									"    pm.expect(resp.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors/3",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "A casting assistant can view all actors and movies",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp5b2Mtb01pXzhRRThORmVWS00tUSJ9.eyJpc3MiOiJodHRwczovL2Ruc2YudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmYzFkOGRiYzI5YmQ4MDA2ZWIwMGI0YyIsImF1ZCI6ImNhc3RfYWdlbmN5IiwiaWF0IjoxNjA2ODIyOTM3LCJleHAiOjE2MDY5MDkzMzcsImF6cCI6IkpjeXh0NmtXSDlRelBVejI1TjNidDZ2T0NCMUdFTzM0Iiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3JzIiwiZGVsZXRlOmFjdG9ycyIsInVwZGF0ZTphY3RvcnMiLCJ1cGRhdGU6bW92aWVzIiwidmlldzphY3RvcnMiLCJ2aWV3Om1vdmllcyJdfQ.i3RPD1FIymm85omcsL5kbfB3z5hf0e4prKQOcclT-T7P61gtHGrCc6eULPxci_VkhPXnNJZ4F6KKQFshnw71R4XjBwh6l7ssA6BxtV-xazUgkDCrBsAIHilb6Opzimj649Qjh06A3LgicsGbiAEAfcM8ICws2Uz7i1XT_GuZ0YDAPgACpPPMWhuIKsLlKgjj9ihVTurH5oAfUXaMUMI7RMJn_jtFD0UZNxnUixU0A8BVnlROHhpntsa-2m05AioPcIIvKu4lhzGQcuNiPtRBwEbOg9AVQm0SeEZmAMct-O0VH9i8mWzHbP96q-3I2Yl4kxf53b46ZsTs88eBtiOZKw",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "%7B%7Btoken%7D%7D",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f73a7e14-f484-4d18-816c-cf23f65850d7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd87cc00-892a-4458-b865-f0c8a023000b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "executive producer",
+			"item": [
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3867ef2b-0093-4497-91ce-41109ca246f8",
+								"exec": [
+									"pm.test(\"check if response has movies details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('movies');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b70764f8-f976-48b3-a6a1-63c7ac4a6f2e",
+								"exec": [
+									"pm.test(\"check if movie is successfully inserted\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('movie');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-999\",\n    \"release_date\": \"01-01-2000\",\n    \"actors\": [\"Actor-1\", \"Actor-2\", \"Actor-3\", \"Actor-X\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7bdf57d-ebfa-4c69-b355-b1e61cecc822",
+								"exec": [
+									"pm.test(\"check if movie is successfully updated\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp.movie).to.have.any.key('release_date');",
+									"    pm.expect(resp.movie).to.have.any.key('actors');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie-161\",\n    \"release_date\": \"01-01-2004\",\n    \"actors\": [\"Actor-1\", \"Actor-2\", \"Actor-X\"]\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/movies/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "38ba0013-d8c9-4309-82b6-bacb6a753722",
+								"exec": [
+									"pm.test(\"check if movie is successfully deleted\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('movie');",
+									"    pm.expect(resp.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/movies/3",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"movies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "421a293d-1fd2-41d3-ab84-8c87f9388d21",
+								"exec": [
+									"pm.test(\"check if response has actors details\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actors');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6bab9e3-2705-483d-9b6b-b2e7b3db6ae8",
+								"exec": [
+									"pm.test(\"check if actor is successfully inserted\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actor');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-151\",\n    \"age\": 30,\n    \"gender\": \"Male\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9df33c23-0e9c-456e-b7c4-14b4e0b2dc92",
+								"exec": [
+									"pm.test(\"check if actor is successfully updated\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp.actor).to.have.any.key('name');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Actor-161\",\n    \"age\": \"40\",\n    \"gender\": \"Female\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/actors/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://{{HOST}}/actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0029fb88-a847-42b2-87a7-8f88d781874b",
+								"exec": [
+									"pm.test(\"check if actor is successfully deleted\", function () {",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp).to.have.any.key('actor');",
+									"    pm.expect(resp.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/actors/2",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"actors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "A casting assistant can view all actors and movies",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp5b2Mtb01pXzhRRThORmVWS00tUSJ9.eyJpc3MiOiJodHRwczovL2Ruc2YudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmYzFkOGY3MGJkNGMyMDA2OGY2ZTA4YyIsImF1ZCI6ImNhc3RfYWdlbmN5IiwiaWF0IjoxNjA2ODIyODAzLCJleHAiOjE2MDY5MDkyMDMsImF6cCI6IkpjeXh0NmtXSDlRelBVejI1TjNidDZ2T0NCMUdFTzM0Iiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3JzIiwiYWRkOm1vdmllcyIsImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwidXBkYXRlOmFjdG9ycyIsInVwZGF0ZTptb3ZpZXMiLCJ2aWV3OmFjdG9ycyIsInZpZXc6bW92aWVzIl19.wKahd5TStSlqDlhJv_7UASuokvrkxtG5c9XNYddVcVugT5ACvi073jt5TlvlUOBAcwMmTc1CJxLLHskSlAWY-yLPjUx5O5HR4XplOYO82jwk9-xiH---6HXu5nnaOnqE_lNparZFG3RuejyqclBv66As0C6Y11iYsCcWa3GGr8s5l0b3SAjuEr9NK5DG14v-nfJVvqrRYdeucZU1FLdMzygc3X00mDPJwxDc_03jXF7OBiF0SvLhditMmGLolAU9jp1XZ8NtjvjKBU_rGf4YZ9l9ujKBgeqCz9YoXTXA11Vok0ywNX_ldRQ8qZ1awewww5vBfQdgTj4l3oagb72nmw",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "%7B%7Btoken%7D%7D",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1dfa9b12-6949-4b9c-bdc5-08017fd4904c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f9960d1-9cdd-4e3a-9248-44341f471cbc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a879747a-cf6d-415d-be3d-954322141859",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "fb8a3e5d-c4fc-48de-928e-bf72737bc5cd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "28c20188-d69c-41f8-b2c1-32358f609058",
+			"key": "HOST",
+			"value": "https://udac-casting-agency.herokuapp.com"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
