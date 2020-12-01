@@ -242,15 +242,26 @@ Sample Response:
   'actor': 1
 }
 ```
+## Running the application
+To run the application locally, you need to run below commands from within the project directory.
+```
+source setup.sh
+export FLASK_APP=app.py
+export FLASK_ENV=development (To run the app in development mode)
+flask run
+```
 
 ## Testing
-To run the test, execute below commands:
+To run unit tests on this application, execute below commands:
 ```
 python3 manage.py db upgrade
 python3 manage.py seed
 python3 test_app.py
 ```
-Alternatively, you may also use the udac-casting-agency-pm-collection.json (postman collection) in this directory to run the unit tests.
+**Note** Currently this app is configured to run tests on app deployed on heroku. To run tests on your locally running app change environment variable 'DATABASE_URL' to 'DATABASE_URL_LOCAL' in test_app.py
+
+
+Alternatively, you may also use the udac-casting-agency.postman_collection.json (postman collection) present in this directory to run the unit tests.
 
 ## Authors
 Rohith has authored all the files and and documentation (Readme.md) in this project.
